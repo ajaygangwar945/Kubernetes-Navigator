@@ -1,0 +1,17 @@
+# Git folders
+.git
+.gitignore
+
+# Docker configuration files
+.dockerignore
+Dockerfile*
+docker-compose*
+
+# IDE settings
+.vscode
+.idea
+
+# Local environment and logs
+*.log
+Thumbs.db
+.DS_Store
