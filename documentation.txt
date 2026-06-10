@@ -1,0 +1,88 @@
+========================================================================
+                 KUBERNETES NAVIGATOR - SETUP DOCUMENTATION
+========================================================================
+
+PROJECT OVERVIEW
+----------------
+Kubernetes Navigator is a single-page interactive guide designed for
+developers learning Kubernetes and local environment setup on Windows 11.
+It contains K8s architecture cards, prerequisite progress tracking, 
+timeline installation guides, a cheat sheet, and a simulated 
+interactive command-line shell.
+
+
+FILE STRUCTURE
+--------------
+- index.html
+  The standalone webpage containing all HTML structure, inline HSL dark mode
+  styles, custom responsive mobile layouts, and JavaScript dynamic interactions
+  (simulated terminal typing, clipboard copy buttons, local storage checklist).
+  
+- Dockerfile
+  Multi-stage container manifest configuring a lightweight Nginx Alpine server
+  to bundle and serve the static navigation page.
+
+- .gitignore
+  Excludes temporary system files, IDE caches, and local configurations
+  from the Git repository.
+
+- .dockerignore
+  Prevents local build logs, caches, and repository metadata from being 
+  transferred into Docker build contexts.
+
+- .github/workflows/docker.yaml
+  GitHub Actions workflow file that builds the Docker image and pushes it
+  to Docker Hub automatically whenever commits are pushed to the 'main' branch.
+
+
+LOCAL INSTALLATION STEPS (WINDOWS 11)
+--------------------------------------
+1. Check Hardware Virtualization:
+   Ensure VT-x or AMD-V is enabled in your system BIOS/UEFI. You can verify
+   this in Windows Task Manager under the "Performance" tab.
+
+2. Install Kubectl (Kubernetes CLI):
+   Open PowerShell as an Administrator and execute:
+   winget install Kubernetes.kubectl
+
+3. Install Minikube:
+   Open PowerShell as an Administrator and execute:
+   winget install Kubernetes.minikube
+
+4. Start Minikube:
+   Ensure Docker Desktop or a supported hypervisor (Hyper-V/VirtualBox) is active,
+   then run:
+   minikube start --driver=docker
+
+
+RUNNING THE PROJECT WITH DOCKER
+-------------------------------
+To host the Kubernetes Navigator webpage locally as a containerized web server:
+
+1. Build the Docker Image:
+   docker build -t kubernetes-navigator .
+
+2. Run the Container:
+   docker run -d -p 8080:80 --name k8s-nav-container kubernetes-navigator
+
+3. Access the Site:
+   Open http://localhost:8080 in your web browser.
+
+4. Stop the Container:
+   docker stop k8s-nav-container
+   docker rm k8s-nav-container
+
+
+CI/CD AND GITHUB ACTIONS PIPELINE
+---------------------------------
+The repository is configured to automatically build and push to Docker Hub
+using GitHub Actions.
+
+Configuration Details:
+- Trigger: Pushes to the 'main' branch.
+- Secrets Required (set in GitHub repository settings -> Secrets and Variables):
+  * DOCKER_USERNAME: Your Docker Hub username.
+  * DOCKER_PASSWORD: Your Docker Hub access token/password.
+- Image Push Target:
+  ${DOCKER_USERNAME}/kubernetes-navigator:latest
+========================================================================
