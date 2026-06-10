@@ -922,29 +922,29 @@
       background: rgba(255, 255, 255, 0.05);
     }
 
-    .hamburger-icon {
-      transition: transform 0.3s ease;
+    .hamburger-icon,
+    .close-icon {
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      position: absolute;
     }
 
-    .hamburger-icon line {
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      transform-origin: center;
+    .close-icon {
+      opacity: 0;
+      transform: rotate(-45deg) scale(0.7);
+    }
+
+    .mobile-menu-toggle {
+      position: relative;
     }
 
     .mobile-menu-toggle.open .hamburger-icon {
-      transform: rotate(180deg);
-    }
-    
-    .mobile-menu-toggle.open .line-2 {
       opacity: 0;
+      transform: rotate(45deg) scale(0.7);
     }
-    
-    .mobile-menu-toggle.open .line-1 {
-      transform: translateY(6px) rotate(45deg);
-    }
-    
-    .mobile-menu-toggle.open .line-3 {
-      transform: translateY(-6px) rotate(-45deg);
+
+    .mobile-menu-toggle.open .close-icon {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
     }
 
     @media (max-width: 992px) {
@@ -963,7 +963,11 @@
       }
       
       .mobile-menu-toggle {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
       }
       
       .nav-links {
@@ -1214,10 +1218,16 @@
       <div style="display: flex; align-items: center; gap: 1rem;">
         <a href="#installation" class="btn btn-primary nav-get-started" style="padding: 8px 18px; font-size: 0.875rem;">Get Started</a>
         <button class="mobile-menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+          <!-- Hamburger icon -->
           <svg class="hamburger-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line class="line-1" x1="3" y1="6" x2="21" y2="6"></line>
-            <line class="line-2" x1="3" y1="12" x2="21" y2="12"></line>
-            <line class="line-3" x1="3" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <!-- Close (X) icon -->
+          <svg class="close-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="4" x2="20" y2="20"></line>
+            <line x1="20" y1="4" x2="4" y2="20"></line>
           </svg>
         </button>
       </div>
